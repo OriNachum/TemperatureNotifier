@@ -15,9 +15,9 @@ namespace TemperatureNotifierTests
 {
     public class ThermalNotifierServiceTest
     {
-        private ILogger _logger;
-        private ThermalNotifierService _thermalNotifierService;
-        private MockHttpMessageHandler _mockHttpMessageHandler;
+        private readonly ILogger _logger;
+        private readonly ThermalNotifierService _thermalNotifierService;
+        private readonly MockHttpMessageHandler _mockHttpMessageHandler;
 
         public ThermalNotifierServiceTest()
         {
