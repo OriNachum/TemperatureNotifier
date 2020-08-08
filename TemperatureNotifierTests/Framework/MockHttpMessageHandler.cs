@@ -21,7 +21,7 @@ namespace TemperatureNotifierTests.Framework
             _responseQueue = new Queue<(string response, HttpStatusCode statusCode)>();
         }
 
-        public void QueueNextResponse(string response, HttpStatusCode statusCode)
+        public void EnqueueNextResponse(string response, HttpStatusCode statusCode)
         {
             _responseQueue.Enqueue((response, statusCode));
         }

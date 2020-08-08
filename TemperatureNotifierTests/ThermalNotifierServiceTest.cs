@@ -36,11 +36,11 @@ namespace TemperatureNotifierTests
         {
             foreach (int index in Enumerable.Range(0, numberOfOKResponses))
             {
-                _mockHttpMessageHandler.QueueNextResponse("32.45", HttpStatusCode.OK);
+                _mockHttpMessageHandler.EnqueueNextResponse("32.45", HttpStatusCode.OK);
             }
             foreach (int index in Enumerable.Range(numberOfOKResponses, 2))
             {
-                _mockHttpMessageHandler.QueueNextResponse("32.45", HttpStatusCode.NotFound);
+                _mockHttpMessageHandler.EnqueueNextResponse("32.45", HttpStatusCode.NotFound);
             }
             bool actualResult = await _thermalNotifierService.NotifyTemperatureAsync();
             Assert.Equal(numberOfCalls, _mockHttpMessageHandler.NumberOfCalls);
