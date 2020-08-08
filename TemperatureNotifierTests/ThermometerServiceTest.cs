@@ -21,7 +21,7 @@ namespace TemperatureNotifierTests
             foreach (var index in Enumerable.Range(1, 1000))
             {
                 double temperature = await _thermometerService.GetTempratureAsync();
-                Assert.True(temperature >= 32 && temperature <= 39);
+                Assert.True(temperature >= 22 && temperature <= 29);
             }
         }
     }

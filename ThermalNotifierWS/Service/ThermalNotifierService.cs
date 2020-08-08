@@ -26,7 +26,11 @@ namespace ThermalNotifierWS.Service
 
         public async Task<bool> AlertTemperatureAsync()
         {
-            return await NotifyTemperatureIfNeeded(new INotifyTemperatureProvider[] { new NotifyOnBreachingAllowedRange(MinTemperature, MaxTemperature), new NotifyOnRevertingToAllowedRange(MinTemperature, MaxTemperature) });
+            return await NotifyTemperatureIfNeeded(new INotifyTemperatureProvider[]
+            {
+                new NotifyOnBreachingAllowedRange(MinTemperature, MaxTemperature),
+                new NotifyOnRevertingToAllowedRange(MinTemperature, MaxTemperature)
+            });
         }
 
         public async Task<bool> NotifyTemperatureAsync()
@@ -77,17 +81,15 @@ namespace ThermalNotifierWS.Service
 
         private static INotifyTemperatureProvider FindNotificationProvider(INotifyTemperatureProvider[] notifyTemperatureProviders, double temperature, double? previousTemperature)
         {
-            INotifyTemperatureProvider chosenNotifyTemperatureProvider = null;
             foreach (INotifyTemperatureProvider notifyTemperatureProvider in notifyTemperatureProviders)
             {
                 if (notifyTemperatureProvider.ShouldNotify(temperature, previousTemperature))
                 {
-                    chosenNotifyTemperatureProvider = notifyTemperatureProvider;
-                    break;
+                    return notifyTemperatureProvider;
                 }
             }
 
-            return chosenNotifyTemperatureProvider;
+            return null;
         }
     }
 }

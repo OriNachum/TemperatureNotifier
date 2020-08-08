@@ -6,7 +6,7 @@ namespace ThermometerWS.Service
     public class ThermometerService : IThermometerService
     {
         private const double RangeOfExpectedTempreture = 7;
-        private const double MinimalTemprature = 32;
+        private const double MinimalTemprature = 22;
 
         private static Random _rng = new Random();
 
