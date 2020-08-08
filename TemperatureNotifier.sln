@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThermometerWS", "ThermometerWS\ThermometerWS.csproj", "{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThermalNotifierWS", "ThermalNotifierWS\ThermalNotifierWS.csproj", "{3CAE2180-3652-42BA-A943-8FA6031C76FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackNotifierWS", "SlackNotifierWS\SlackNotifierWS.csproj", "{C115DD13-2513-4A5F-8A7F-466F21230952}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureNotifierTests", "TemperatureNotifierTests\TemperatureNotifierTests.csproj", "{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		wwwroot|Any CPU = wwwroot|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.wwwroot|Any CPU.ActiveCfg = wwwroot|Any CPU
+		{E5D52103-DB84-46FA-9C7A-851FA0FFB7A2}.wwwroot|Any CPU.Build.0 = wwwroot|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.wwwroot|Any CPU.ActiveCfg = wwwroot|Any CPU
+		{3CAE2180-3652-42BA-A943-8FA6031C76FD}.wwwroot|Any CPU.Build.0 = wwwroot|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.wwwroot|Any CPU.ActiveCfg = wwwroot|Any CPU
+		{C115DD13-2513-4A5F-8A7F-466F21230952}.wwwroot|Any CPU.Build.0 = wwwroot|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.wwwroot|Any CPU.ActiveCfg = wwwroot|Any CPU
+		{B1E7E9B3-AE0A-426F-9EC5-E453D5E28923}.wwwroot|Any CPU.Build.0 = wwwroot|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E954E7F0-04BD-4C4F-A75A-B2BE695253CB}
+	EndGlobalSection
+EndGlobal
