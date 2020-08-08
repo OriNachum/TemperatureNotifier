@@ -67,15 +67,29 @@ namespace TemperatureNotifierTests
         }
 
         [Theory]
-        [InlineData(1)]
-        public async Task AlertTemperature_SuccessFlow_NotifiesSlackIfNeeded(int stuff)
+        [InlineData(25, 26, false)]
+        [InlineData(25, 32, true)]
+        [InlineData(32, 25, true)]
+        [InlineData(32, 33, false)]
+        [InlineData(25, 10, true)]
+        [InlineData(10, 25, true)]
+        [InlineData(10, 12, false)]
+        public async Task AlertTemperature_SuccessFlow_NotifiesSlackIfNeeded(double initialTemperature, double newTemperature, bool alertSent)
         {
-            foreach (int index in Enumerable.Range(0, 2))
-            {
-                _mockHttpMessageHandler.EnqueueNextResponse("32.45", HttpStatusCode.OK);
-            }
+            _mockHttpMessageHandler.EnqueueNextResponse(initialTemperature.ToString(), HttpStatusCode.OK);
+            _mockHttpMessageHandler.EnqueueNextResponse("Success", HttpStatusCode.OK);
+            await _thermalNotifierService.NotifyTemperatureAsync();
+            _mockHttpMessageHandler.EnqueueNextResponse(newTemperature.ToString(), HttpStatusCode.OK);
+            _mockHttpMessageHandler.EnqueueNextResponse("Success", HttpStatusCode.OK);
             await _thermalNotifierService.AlertTemperatureAsync();
-            Assert.Equal(2, _mockHttpMessageHandler.NumberOfCalls);
+            if (alertSent)
+            {
+                Assert.Equal(4, _mockHttpMessageHandler.NumberOfCalls);
+            }
+            else
+            {
+                Assert.Equal(3, _mockHttpMessageHandler.NumberOfCalls);
+            }
         }
     }
 }
