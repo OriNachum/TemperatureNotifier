@@ -4,7 +4,7 @@ namespace ThermalNotifierWS.Service
 {
     public interface IThermalNotifierService
     {
-        Task AlertTemperatureAsync();
+        Task<bool> AlertTemperatureAsync();
 
         Task<bool> NotifyTemperatureAsync();
     }

@@ -26,6 +26,7 @@ namespace TemperatureNotifierTests
 
             _logger = A.Fake<ILogger>();
             _thermalNotifierService = new ThermalNotifierService(httpClient, _logger);
+            ThermalNotifierServiceTemperatureHistory.LastKnownTemperature = null;
         }
 
         [Theory]
@@ -60,8 +61,9 @@ namespace TemperatureNotifierTests
             {
                 _mockHttpMessageHandler.EnqueueNextResponse("32.45", HttpStatusCode.NotFound);
             }
-            await _thermalNotifierService.AlertTemperatureAsync();
+            bool actualResult = await _thermalNotifierService.AlertTemperatureAsync();
             Assert.Equal(numberOfCalls, _mockHttpMessageHandler.NumberOfCalls);
+            Assert.Equal(result, actualResult);
         }
 
         [Theory]

@@ -15,23 +15,26 @@ namespace ThermalNotifierWS.Service
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
 
+        private const double MinTemperature = 22;
+        private const double MaxTemperature = 27;
+
         public ThermalNotifierService(HttpClient httpClient, ILogger logger)
         {
             _httpClient = httpClient;
             _logger = logger;
         }
 
-        public /*async*/ Task AlertTemperatureAsync()
+        public async Task<bool> AlertTemperatureAsync()
         {
-            throw new NotImplementedException();
+            return await NotifyTemperatureIfNeeded(new INotifyTemperatureProvider[] { new NotifyOnBreachingAllowedRange(MinTemperature, MaxTemperature), new NotifyOnRevertingToAllowedRange(MinTemperature, MaxTemperature) });
         }
 
         public async Task<bool> NotifyTemperatureAsync()
         {
-            return await NotifyTemperatureIfNeeded(new AlwaysNotifyTemperature());
+            return await NotifyTemperatureIfNeeded(new [] { new NotifyAlways() });
         }
 
-        private async Task<bool> NotifyTemperatureIfNeeded(INotifyTemperatureProvider shouldNotifyOnTemperatureProvider)
+        private async Task<bool> NotifyTemperatureIfNeeded(INotifyTemperatureProvider[] notifyTemperatureProviders)
         {
             string requestTemperatureUrl = "https://localhost:7001/Thermometer";
             HttpResponseMessage responseTemperature = await _httpClient.GetAsync(requestTemperatureUrl);
@@ -47,7 +50,13 @@ namespace ThermalNotifierWS.Service
                 _logger.LogError($"{requestTemperatureUrl} failed with non-double temperature {temperatureText}");
                 return false;
             }
-            if (!shouldNotifyOnTemperatureProvider.ShouldNotify(temperature))
+
+            double? previouslyKnownTemperature = ThermalNotifierServiceTemperatureHistory.LastKnownTemperature;
+            ThermalNotifierServiceTemperatureHistory.LastKnownTemperature = temperature;
+
+            INotifyTemperatureProvider notifyTemperatureProvider = FindNotificationProvider(notifyTemperatureProviders, temperature, previouslyKnownTemperature);
+
+            if (notifyTemperatureProvider == null)
             {
                 _logger.LogDebug($"{requestTemperatureUrl} succeeded, but temperature is OK: {temperature}℃");
                 return true;
@@ -55,7 +64,7 @@ namespace ThermalNotifierWS.Service
 
             string requestNotificationUrl = "https://localhost:6001/SlackNotifier";
             var notificationRequestUrlBuilder = new UriBuilder(requestNotificationUrl);
-            string encodedMessage = UrlEncoder.Default.Encode(shouldNotifyOnTemperatureProvider.GenerateMessage(temperature));
+            string encodedMessage = UrlEncoder.Default.Encode(notifyTemperatureProvider.GenerateMessage(temperature));
             notificationRequestUrlBuilder.Query = $"message={encodedMessage}";
             HttpResponseMessage responseNotification = await _httpClient.GetAsync(notificationRequestUrlBuilder.ToString());
             if (responseNotification == null || responseNotification.StatusCode != HttpStatusCode.OK)
@@ -64,6 +73,21 @@ namespace ThermalNotifierWS.Service
                 return false;
             }
             return true;
+        }
+
+        private static INotifyTemperatureProvider FindNotificationProvider(INotifyTemperatureProvider[] notifyTemperatureProviders, double temperature, double? previousTemperature)
+        {
+            INotifyTemperatureProvider chosenNotifyTemperatureProvider = null;
+            foreach (INotifyTemperatureProvider notifyTemperatureProvider in notifyTemperatureProviders)
+            {
+                if (notifyTemperatureProvider.ShouldNotify(temperature, previousTemperature))
+                {
+                    chosenNotifyTemperatureProvider = notifyTemperatureProvider;
+                    break;
+                }
+            }
+
+            return chosenNotifyTemperatureProvider;
         }
     }
 }

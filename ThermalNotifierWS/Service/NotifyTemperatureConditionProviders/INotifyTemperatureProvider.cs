@@ -7,7 +7,7 @@ namespace ThermalNotifierWS.Service.NotifyTemperatureConditionProviders
 {
     public interface INotifyTemperatureProvider
     {
-        bool ShouldNotify(double temperature);
+        bool ShouldNotify(double temperature, double? previousTemperature);
 
         string GenerateMessage(double temperature);
     }
