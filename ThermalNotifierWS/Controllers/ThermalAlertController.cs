@@ -10,22 +10,22 @@ namespace ThermalNotifierWS.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ThermalNotifierController : ControllerBase
+    public class ThermalAlertController : ControllerBase
     {
-        private readonly ILogger<ThermalNotifierController> _logger;
+        private readonly ILogger<ThermalAlertController> _logger;
         private readonly IThermalNotifierService _thermalNotifierService;
 
-        public ThermalNotifierController(ILogger<ThermalNotifierController> logger, IThermalNotifierService thermalNotifierService)
+        public ThermalAlertController(ILogger<ThermalAlertController> logger, IThermalNotifierService thermalNotifierService)
         {
             _logger = logger;
             _thermalNotifierService = thermalNotifierService;
         }
 
-        // Use: https://localhost:8001/ThermalNotifier
+        // Use: https://localhost:8001/ThermalAlert
         [HttpGet]
         public async Task<bool> Get()
         {
-            return await _thermalNotifierService.NotifyTemperatureAsync();
+            return await _thermalNotifierService.AlertTemperatureAsync();
         }
     }
 }

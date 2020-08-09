@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,13 @@ namespace ThermometerWS.Service.ThermometerReader
         public async Task<double?> GetCurrentMeasurementAsync()
         {
             string sensorRead = await GetSensorOutputAsync();
+            Console.WriteLine(sensorRead);
+            if (sensorRead == null || sensorRead.Split(' ').Count() < 7)
+            {
+                // log
+                return null;
+            }
+
             string valueInCelcious = sensorRead.Split(' ')[6];
             if (!double.TryParse(valueInCelcious, out double temperature))
             {
