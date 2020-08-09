@@ -23,9 +23,9 @@ namespace ThermometerWS.Controllers
 
         // Use: https://localhost:7001/Thermometer
         [HttpGet]
-        public async Task<double> Get()
+        public async Task<double?> Get()
         {
-            double temperature = await _tempratureService.GetTempratureAsync();
+            double? temperature = await _tempratureService.GetTempratureAsync();
             return temperature;
         }
     }

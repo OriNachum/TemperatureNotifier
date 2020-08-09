@@ -4,6 +4,6 @@ namespace ThermometerWS.Service
 {
     public interface IThermometerService
     {
-        Task<double> GetTempratureAsync();
+        Task<double?> GetTempratureAsync();
     }
 }
