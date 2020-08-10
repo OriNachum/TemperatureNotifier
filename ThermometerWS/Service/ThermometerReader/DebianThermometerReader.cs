@@ -10,10 +10,9 @@ namespace ThermometerWS.Service.ThermometerReader
         const string ThermometerFileName = "digitemp_DS9097";
         const string SetupTemperatureSensorCommad = "-i -s /dev/ttyUSB0";
         const string ReadTemperatureCommad = "-q -t 0 -c .digitemprc";
-
+        private bool SensorInitialized = false;
         public DebianThermometerReader()
         {
-            RunCommandAsync(SetupTemperatureSensorCommad).Wait();
         }
 
         public async Task<double?> GetCurrentMeasurementAsync()
@@ -35,8 +34,13 @@ namespace ThermometerWS.Service.ThermometerReader
             return temperature;
         }
 
-        private static async Task<string> GetSensorOutputAsync()
+        private async Task<string> GetSensorOutputAsync()
         {
+            if (!SensorInitialized)
+            {
+                await RunCommandAsync(SetupTemperatureSensorCommad);
+                SensorInitialized = true;
+            }
             string output = await RunCommandAsync(ReadTemperatureCommad);
             return output;
         }
