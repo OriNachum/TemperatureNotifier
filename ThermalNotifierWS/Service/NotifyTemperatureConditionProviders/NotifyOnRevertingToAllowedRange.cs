@@ -18,8 +18,8 @@ namespace ThermalNotifierWS.Service.NotifyTemperatureConditionProviders
 
         public bool ShouldNotify(double temperature, double? previousTemperature)
         {
-            return !TemperatureIsInRange(temperature) &&
-                   (!previousTemperature.HasValue || TemperatureIsInRange(previousTemperature.Value));
+            return TemperatureIsInRange(temperature) &&
+                   (!previousTemperature.HasValue || !TemperatureIsInRange(previousTemperature.Value));
         }
 
         private bool TemperatureIsInRange(double temperature)
